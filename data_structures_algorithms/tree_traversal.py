@@ -69,11 +69,82 @@ class binary_search_tree:
             current_node = current_node.right
         return current_node
 
-tree = binary_search_tree()
+    # Breadth First Search. (BFS)
+    def bfs(self):
+        current_node = self.root
+        my_queue = []
+        values = []
+        my_queue.append(current_node)
+        
+        while len(my_queue) > 0:
+            current_node = my_queue.pop(0)
+            values.append(current_node.value)
+            
+            if current_node.left is not None:
+                my_queue.append(current_node.left)
+            if current_node.right is not None:
+                my_queue.append(current_node.right)
+        
+        return values
+    
+    # Depth First Search. (DFS)
+    # Pre-Order
+    def dfs_pre_order(self):
+        values = []
+        
+        def traverse(current_node):
+            values.append(current_node.value)
+            
+            if current_node.left is not None:
+                traverse(current_node.left)
+            if current_node.right is not None:
+                traverse(current_node.right)
+        
+        traverse(self.root)
+        return values
+    
+    # Post-Order
+    def dfs_post_order(self):
+        values = []
+        
+        def traverse(current_node):
+            if current_node.left is not None:
+                traverse(current_node.left)
+            if current_node.right is not None:
+                traverse(current_node.right)
+                
+            values.append(current_node.value)
+            
+        traverse(self.root)
+        return values
+    
+    # In-Order
+    def dfs_in_order(self):
+        values = []
+        
+        def traverse(current_node):
+            if current_node.left is not None:
+                traverse(current_node.left)
+                
+            values.append(current_node.value)
+            
+            if current_node.right is not None:
+                traverse(current_node.right)
+        
+        traverse(self.root)
+        return values
 
-print(tree.insert(10))
-print(tree.insert(10))
-print(tree.insert(15))
 
-print(tree.contains(10))
-print(tree.contains(20))
+my_tree = binary_search_tree()
+my_tree.insert(38)
+my_tree.insert(19)
+my_tree.insert(69)
+my_tree.insert(12)
+my_tree.insert(24)
+my_tree.insert(59)
+my_tree.insert(95)
+
+print(my_tree.bfs())
+print(my_tree.dfs_pre_order())
+print(my_tree.dfs_post_order())
+print(my_tree.dfs_in_order())
